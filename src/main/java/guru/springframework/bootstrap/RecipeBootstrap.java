@@ -4,11 +4,7 @@ import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
-import guru.springframework.repositories.reactive.UnitOfMeasureReactiveRepository;
-import guru.springframework.repositories.reactive.RecipeReactiveRepository;
-import guru.springframework.repositories.reactive.CategoryReactiveRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -30,13 +26,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
-    @Autowired
-    UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
-    @Autowired
-    RecipeReactiveRepository recipeReactiveRepository;
-    @Autowired
-    CategoryReactiveRepository categoryReactiveRepository;
-
     public RecipeBootstrap(CategoryRepository categoryRepository,
                            RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
@@ -52,15 +41,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         loadUom();
         recipeRepository.saveAll(getRecipes());
         log.debug("Loading Bootstrap Data");
-
-
-        log.error("#######");
-        log.error("Count for UOM_Reactive: " + unitOfMeasureReactiveRepository.count().block());
-        log.error("Count Recipe_Reactive: " + recipeReactiveRepository.count().block());
-        log.error("Count Category_Reactive: " + categoryReactiveRepository.count().block());
     }
 
-    private void loadCategories(){
+    private void loadCategories() {
         Category cat1 = new Category();
         cat1.setDescription("American");
         categoryRepository.save(cat1);
@@ -78,7 +61,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         categoryRepository.save(cat4);
     }
 
-    private void loadUom(){
+    private void loadUom() {
         UnitOfMeasure uom1 = new UnitOfMeasure();
         uom1.setDescription("Teaspoon");
         unitOfMeasureRepository.save(uom1);
@@ -119,37 +102,37 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         //get UOMs
         Optional<UnitOfMeasure> eachUomOptional = unitOfMeasureRepository.findByDescription("Each");
 
-        if(!eachUomOptional.isPresent()){
+        if (!eachUomOptional.isPresent()) {
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> tableSpoonUomOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
 
-        if(!tableSpoonUomOptional.isPresent()){
+        if (!tableSpoonUomOptional.isPresent()) {
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> teaSpoonUomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
 
-        if(!teaSpoonUomOptional.isPresent()){
+        if (!teaSpoonUomOptional.isPresent()) {
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> dashUomOptional = unitOfMeasureRepository.findByDescription("Dash");
 
-        if(!dashUomOptional.isPresent()){
+        if (!dashUomOptional.isPresent()) {
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> pintUomOptional = unitOfMeasureRepository.findByDescription("Pint");
 
-        if(!pintUomOptional.isPresent()){
+        if (!pintUomOptional.isPresent()) {
             throw new RuntimeException("Expected UOM Not Found");
         }
 
         Optional<UnitOfMeasure> cupsUomOptional = unitOfMeasureRepository.findByDescription("Cup");
 
-        if(!cupsUomOptional.isPresent()){
+        if (!cupsUomOptional.isPresent()) {
             throw new RuntimeException("Expected UOM Not Found");
         }
 
@@ -164,13 +147,13 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         //get Categories
         Optional<Category> americanCategoryOptional = categoryRepository.findByDescription("American");
 
-        if(!americanCategoryOptional.isPresent()){
+        if (!americanCategoryOptional.isPresent()) {
             throw new RuntimeException("Expected Category Not Found");
         }
 
         Optional<Category> mexicanCategoryOptional = categoryRepository.findByDescription("Mexican");
 
-        if(!mexicanCategoryOptional.isPresent()){
+        if (!mexicanCategoryOptional.isPresent()) {
             throw new RuntimeException("Expected Category Not Found");
         }
 
