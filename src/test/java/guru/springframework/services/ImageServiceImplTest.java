@@ -52,7 +52,7 @@ public class ImageServiceImplTest {
         //then
         verify(recipeReactiveRepository, times(1)).save(argumentCaptor.capture());
         Recipe savedRecipe = argumentCaptor.getValue();
-        assertEquals(0, savedRecipe.getImage().length);
+        assertEquals(21, savedRecipe.getImage().length);
     }
 
 }
