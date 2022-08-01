@@ -62,7 +62,7 @@ public class IndexControllerTest {
 
         recipes.add(recipe);
 
-        when(recipeService.getRecipes()).thenReturn(Flux.just(recipe));
+        when(recipeService.getRecipes()).thenReturn(Flux.fromIterable(recipes));
 
         ArgumentCaptor<Flux<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Flux.class);
 
@@ -75,7 +75,7 @@ public class IndexControllerTest {
         verify(recipeService, times(1)).getRecipes();
         verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
         Flux<Recipe> setInController = argumentCaptor.getValue();
-        assertEquals(Long.valueOf(1L), setInController.count().block());
+        assertEquals(Long.valueOf(2L), setInController.count().block());
     }
 
 }
